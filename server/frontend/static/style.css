@@ -124,3 +124,17 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+
+.contact_details{
+    font: 20px;
+    color: rgb(50, 164, 202);
+    text-align: center;
+  }
+ 
+.contact_header{
+    font: 20px bold;
+    color: rgb(50, 164, 202);
+    text-align: center;
+    margin-bottom: 2px;  
+}
