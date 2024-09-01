@@ -30,10 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'https://sofiamarioli-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai', # noqa: E501
+    'https://sofiamarioli-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',   # noqa: E501
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://sofiamarioli-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai', # noqa: E501
+    'https://sofiamarioli-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',   # noqa: E501
 ]
 
 REST_FRAMEWORK = {
@@ -99,20 +99,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-    'NAME':
-    'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', # noqa: E501
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',   # noqa: E501
     },
     {
-    'NAME':
-    'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-    'NAME':
-    'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-    'NAME':
-    'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
