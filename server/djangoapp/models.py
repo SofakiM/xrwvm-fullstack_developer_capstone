@@ -1,7 +1,7 @@
 # Uncomment the following imports before adding the Model code
 
 from django.db import models
-from django.utils.timezone import now
+from django.utils.timezone import now   # noqa: F401
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -11,7 +11,7 @@ class CarMake(models.Model):
     website = models.URLField(blank=True, null=True)
 
     def __str__(self):
-        return self.name  
+        return self.name
 
 
 class CarModel(models.Model):
@@ -34,4 +34,3 @@ class CarModel(models.Model):
 
     def __str__(self):
         return self.name
-  
