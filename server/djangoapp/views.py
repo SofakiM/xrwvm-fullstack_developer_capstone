@@ -78,8 +78,6 @@ def registration(request):
                                         password=password,
                                         email=email)
         # Login the user and redirect to list page
-
-
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
         return JsonResponse(data)
@@ -87,11 +85,11 @@ def registration(request):
         data = {"userName": username, "error": "Already Registered"}
         return JsonResponse(data)
 
-# Update the `get_dealerships` render list of dealerships all by default, 
+# Update the `get_dealerships` render list of dealerships all by default,
 # particular state if state is passed
 
 
-def get_dealerships(request, state= "All"):
+def get_dealerships(request, state="All"):
     if (state == "All"):
         endpoint = "/fetchDealers"
     else:
@@ -100,13 +98,11 @@ def get_dealerships(request, state= "All"):
     return JsonResponse({"status": 200, "dealers": dealerships})
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
-# def get_dealer_reviews(request,dealer_id): 
+# def get_dealer_reviews(request,dealer_id):
 
 
 def get_dealer_reviews(request, dealer_id):
     # if dealer id has been provided
-
-
     if (dealer_id):
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
         reviews = get_request(endpoint)
@@ -139,27 +135,27 @@ def add_review(request):
     # Check if the user is authenticated
     if request.user.is_anonymous:
         return JsonResponse({"status": 401, "message": "Authentication required"},
-                            status=401)
-    
+                            status=401)    
     # Parse JSON data from the request body
     try:
         data = json.loads(request.body)
     except json.JSONDecodeError:
         return JsonResponse({"status": 400, "message": "Invalid JSON data"},
-                            status=400)
-    
+                            status=400)    
     # Attempt to post the review
     try:
         # Assuming post_review is a function you've defined elsewhere
         response = post_review(data)
-        return JsonResponse({"status": 200, "message": "Review posted successfully"})
+        return JsonResponse({"status": 200,
+                             "message": "Review posted successfully"})
     except PermissionDenied:
         # This exception is typically used for 403Forbidden,
         # but here we're returning it as 403
         return JsonResponse({"status": 403, "message": "Unauthorized"}, status=403)
     except Exception as e:
         # Catch any other exceptions and return a 500 status for server errors
-        return JsonResponse({"status": 500, "message": f"An error occurred: {str(e)}"},
+        return JsonResponse({"status": 500,
+                             "message": f"An error occurred: {str(e)}"},
                             status=500)
 
 
