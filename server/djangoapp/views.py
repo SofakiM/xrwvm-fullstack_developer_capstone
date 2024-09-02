@@ -65,7 +65,7 @@ def registration(request):
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except:
+    except Exception:
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
 
@@ -134,24 +134,26 @@ def get_dealer_details(request, dealer_id):
 def add_review(request):
     # Check if the user is authenticated
     if request.user.is_anonymous:
-        return JsonResponse({"status": 401, "message": "Authentication required"},
-                            status=401)    
+        return JsonResponse({"status": 401,
+                             "message": "Authentication required"},
+                            status=401)
     # Parse JSON data from the request body
     try:
         data = json.loads(request.body)
     except json.JSONDecodeError:
         return JsonResponse({"status": 400, "message": "Invalid JSON data"},
-                            status=400)    
+                            status=400)
     # Attempt to post the review
     try:
         # Assuming post_review is a function you've defined elsewhere
-        response = post_review(data)
+        response = post_review(data)   # noqa: F841
         return JsonResponse({"status": 200,
                              "message": "Review posted successfully"})
     except PermissionDenied:
         # This exception is typically used for 403Forbidden,
         # but here we're returning it as 403
-        return JsonResponse({"status": 403, "message": "Unauthorized"}, status=403)
+        return JsonResponse({"status": 403,
+                             "message": "Unauthorized"}, status=403)
     except Exception as e:
         # Catch any other exceptions and return a 500 status for server errors
         return JsonResponse({"status": 500,
@@ -167,6 +169,6 @@ def get_cars(request):
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, 
+        cars.append({"CarModel": car_model.name,
                     "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
