@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                                                    ('WAGON', 'Wagon'),
                                                    ('COUPE', 'Coupe'),
                                                    ('PICKUP', 'Pickup')],
-                                                   default='SUV', max_length=10)),   # noqa: E501
+                                          default='SUV', max_length=10)),   # noqa: E501
                 ('year', models.IntegerField(default=2023,
                                              validators=[django.core.validators.MaxValueValidator(2023),   # noqa: E501
                                                          django.core.validators.MinValueValidator(2015)])),   # noqa: E501
