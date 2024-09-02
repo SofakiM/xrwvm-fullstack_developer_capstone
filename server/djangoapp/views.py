@@ -9,6 +9,7 @@ from django.contrib.auth import logout
 # from datetime import datetime
 
 from django.http import JsonResponse
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth import login, authenticate
 import logging
 import json
@@ -131,15 +132,35 @@ def get_dealer_details(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 # def add_review(request):
+
+
 @csrf_exempt
 def add_review(request):
-    if request.user.is_anonymous is False:
+    # Check if the user is authenticated
+    if request.user.is_anonymous:
+        return JsonResponse({"status": 401, "message": "Authentication required"},
+                            status=401)
+    
+    # Parse JSON data from the request body
+    try:
         data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"status": 400, "message": "Invalid JSON data"},
+                            status=400)
+    
+    # Attempt to post the review
+    try:
+        # Assuming post_review is a function you've defined elsewhere
+        response = post_review(data)
         return JsonResponse({"status": 200, "message": "Review posted successfully"})
+    except PermissionDenied:
+        # This exception is typically used for 403Forbidden,
+        # but here we're returning it as 403
+        return JsonResponse({"status": 403, "message": "Unauthorized"}, status=403)
     except Exception as e:
-        return JsonResponse({"status": 401, "message": f"Error in posting review: {str(e)}"})
-    else:
-        return JsonResponse({"status": 403, "message": "Unauthorized"})
+        # Catch any other exceptions and return a 500 status for server errors
+        return JsonResponse({"status": 500, "message": f"An error occurred: {str(e)}"},
+                            status=500)
 
 
 def get_cars(request):
